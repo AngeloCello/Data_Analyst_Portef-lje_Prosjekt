@@ -1,9 +1,19 @@
+/*
+Covid 19 Data Utforskning
+Metoder brukt: Joins, CTE, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
+*/
+
+
+-- Disse er tabellene som ble brukt til prosjektet
+
 SELECT *
 FROM PortfolioProject.dbo.Covid_Dødsfall
 
 
 SELECT *
 FROM PortfolioProject.dbo.Covid_Vaksinasjon
+
+
 
 
 -- 1.
