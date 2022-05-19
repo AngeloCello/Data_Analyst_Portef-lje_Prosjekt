@@ -1,5 +1,5 @@
 SELECT *
-FROM PortfolioProject.dbo.Covid_Dødsfall
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 
 
 SELECT *
@@ -10,7 +10,7 @@ FROM PortfolioProject.dbo.Covid_Vaksinasjon
 -- Dette er Data som vi skal bruke gjennom prosjektet
 
 SELECT location, date, total_cases, new_cases, new_deaths, total_deaths, population
-FROM PortfolioProject.dbo.Covid_Dødsfall
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 
 SELECT new_vaccinations, total_vaccinations
 FROM PortfolioProject.dbo.Covid_Vaksinasjon
@@ -19,13 +19,13 @@ FROM PortfolioProject.dbo.Covid_Vaksinasjon
 
 
 -- 2.
--- Se på totalt antall saker VS Totale Dødsfall
--- Hvor mange prosent som døde sammenlignet med antall påvist total smitte
--- Viser sannnsynligheten for å dø av covid smitte
+-- Se pÃ¥ total pÃ¥vist smitte VS total dÃ¸dsfall
+-- Hvor mange prosent som dÃ¸de sammenlignet med antall pÃ¥vist total smitte
+-- Viser sannnsynligheten for Ã¥ dÃ¸ av covid smitte
 
-SELECT location, date, total_cases as påvist_total_smitte, total_deaths as total_døde,
-	   (convert(float, total_deaths)/convert(float, total_cases)) * 100 as prosent_antall_døde
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT location, date, total_cases as pÃ¥vist_total_smitte, total_deaths as total_dÃ¸de,
+       (convert(float, total_deaths)/convert(float, total_cases)) * 100 as prosent_antall_dÃ¸de
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE location = 'Norway'
 ORDER BY date
 
@@ -33,12 +33,12 @@ ORDER BY date
 
 
 -- 3.
--- Se på antall påvist total smitte VS befolkningen i Norge
--- Se på prosent av befolkningen som har fått covid
+-- Se pÃ¥ antall pÃ¥vist total smitte VS befolkningen i Norge
+-- Se pÃ¥ prosent av befolkningen som har fÃ¥tt covid
 
-SELECT location, date, population, total_cases as påvist_total_smitte, 
-	   (convert(float, total_cases)/convert(float, population)) * 100 as prosent_antall_påvist_smitte_i_Norge
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT location, date, population, total_cases as pÃ¥vist_total_smitte, 
+       (convert(float, total_cases)/convert(float, population)) * 100 as prosent_antall_pÃ¥vist_smitte_i_Norge
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE location in ('Norway')
 ORDER BY date
 
@@ -46,25 +46,25 @@ ORDER BY date
 
 
 -- 4.
--- Se på land i verden med høyest påvist smitte sammenlignet med befolkningen
--- Se på prosent antall påvist smitte
+-- Se pÃ¥ land i verden med hÃ¸yest pÃ¥vist smitte sammenlignet med befolkningen
+-- Se pÃ¥ prosent antall pÃ¥vist smitte
 
-SELECT location, population, SUM(convert(float, new_cases)) as antall_påvist_total_smitte, 
-	   MAX(convert(float, total_cases)/convert(float, population))* 100 as prosent_antall_påvist_smitte
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT location, population, SUM(convert(float, new_cases)) as antall_pÃ¥vist_total_smitte, 
+	   MAX(convert(float, total_cases)/convert(float, population))* 100 as prosent_antall_pÃ¥vist_smitte
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE continent is not null
 GROUP BY location, population
-ORDER BY prosent_antall_påvist_smitte desc
+ORDER BY prosent_antall_pÃ¥vist_smitte desc
 
 
 
 
 -- 5.
 -- BRYTE NED TING ETTER KONTINENT
--- Vise kontinenter med total antall døde
+-- Vise kontinenter med total antall dÃ¸de
 
-SELECT location, SUM(convert(float, new_cases)) as total_antall_døde_i_verden
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT location, SUM(convert(float, new_cases)) as total_antall_dÃ¸de_i_verden
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE continent is null
 AND location in ('Africa', 'Oceania', 'South America', 'Asia', 'North America', 'Europe')
 GROUP BY location
@@ -73,13 +73,13 @@ GROUP BY location
 
 
 -- 6.
--- kalkulasjon som utgjør hele verden (Globalt nummer)
--- nye påvist smitte | nye antall døde | prosent døde
+-- kalkulasjon som utgjÃ¸r hele verden (Globalt nummer)
+-- nye pÃ¥vist smitte | nye antall dÃ¸de | prosent dÃ¸de
 
-SELECT date, sum(convert(float, new_cases)) as antall_påvist_nye_smitte, 
-			 sum(convert(float, new_deaths)) as antall_nye_døde,
-			 sum(convert(float, new_deaths))/sum(convert(float, new_cases))*100 as prosent_antall_døde
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT date, sum(convert(float, new_cases)) as antall_pÃ¥vist_nye_smitte, 
+	     sum(convert(float, new_deaths)) as antall_nye_dÃ¸de,
+	     sum(convert(float, new_deaths))/sum(convert(float, new_cases))*100 as prosent_antall_dÃ¸de
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE continent is not null
 GROUP BY date
 ORDER BY date
@@ -90,23 +90,23 @@ ORDER BY date
 -- 7.
 -- GLOBALT NUMMER
 
-SELECT sum(convert(float, new_cases)) as antall_påvist_nye_smitte, 
-	   sum(convert(float, new_deaths)) as antall_nye_døde,
-	   sum(convert(float, new_deaths))/sum(convert(float, new_cases))*100 as prosent_antall_døde
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT sum(convert(float, new_cases)) as antall_pÃ¥vist_nye_smitte, 
+       sum(convert(float, new_deaths)) as antall_nye_dÃ¸de,
+       sum(convert(float, new_deaths))/sum(convert(float, new_cases))*100 as prosent_antall_dÃ¸de
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE continent is not null
 
 
 
 
 -- 8.
--- Se på den Totale befolkningen i Norge vs vaksinasjon
+-- Se pÃ¥ den Totale befolkningen i Norge vs vaksinasjon
 
 SELECT cod.location, cod.date, cod.population, vak.new_vaccinations,
-	   sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date)
+       sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date) 
        as sum_vaksinerte_per_dag
-       --(sum_vaksinerte_per_dag/population)*100
-FROM PortfolioProject.dbo.Covid_Dødsfall cod
+       --(sum_vaksinerte_per_dag/population)* 100
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall cod
 JOIN PortfolioProject.dbo.Covid_Vaksinasjon vak
 	ON cod.location = vak.location
 	AND cod.date = vak.date
@@ -124,17 +124,17 @@ With bef_vs_vak (continet, location, date, population, new_vaccinations, sum_vak
 as 
 (
 SELECT cod.continent, cod.location, cod.date, cod.population, vak.new_vaccinations,
-	   sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date)
+       sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date)
        as sum_vaksinerte_per_dag
-       --(sum_vaksinerte_per_dag/population)*100
-FROM PortfolioProject.dbo.Covid_Dødsfall cod
+       --(sum_vaksinerte_per_dag/population)* 100
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall cod
 JOIN PortfolioProject.dbo.Covid_Vaksinasjon vak
 	ON cod.location = vak.location
 	AND cod.date = vak.date
 	AND cod.continent is not null
 	AND cod.location = 'Norway'
 )
-SELECT *, (sum_vaksinerte_per_dag/population)*100
+SELECT *, (sum_vaksinerte_per_dag/population)* 100
 FROM bef_vs_vak
 
 
@@ -158,7 +158,7 @@ SELECT cod.continent, cod.location, cod.date, cod.population, vak.new_vaccinatio
 	   sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date)
        as sum_vaksinerte_per_dag
        --(sum_vaksinerte_per_dag/population)*100
-FROM PortfolioProject.dbo.Covid_Dødsfall cod
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall cod
 JOIN PortfolioProject.dbo.Covid_Vaksinasjon vak
 	ON cod.location = vak.location
 	AND cod.date = vak.date
@@ -172,20 +172,20 @@ FROM #prosent_befolkning_vaksinert
 
 
 -- 11.
--- Lage View for å lagre det til visualisering til senere bruk
+-- Lage View for Ã¥ lagre det til visualisering til senere bruk
 
 -- View 1
-Create View  total_antall_døde_i_verden_v
+Create View  total_antall_dÃ¸de_i_verden_v
 as
-SELECT location, SUM(convert(float, new_cases)) as total_antall_døde_i_verden
-FROM PortfolioProject.dbo.Covid_Dødsfall
+SELECT location, SUM(convert(float, new_cases)) as total_antall_dÃ¸de_i_verden
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall
 WHERE continent is null
 AND location in ('Africa', 'Oceania', 'South America', 'Asia', 'North America', 'Europe')
 GROUP BY location
 
 
 SELECT *
-FROM total_antall_døde_i_verden_v
+FROM total_antall_dÃ¸de_i_verden_v
 
 
 
@@ -198,7 +198,7 @@ SELECT cod.location, cod.date, cod.population, vak.new_vaccinations,
 	   sum(convert(float, vak.new_vaccinations)) OVER (partition by cod.location order by cod.location, cod.date)
        as sum_vaksinerte_per_dag
        --(sum_vaksinerte_per_dag/population)*100
-FROM PortfolioProject.dbo.Covid_Dødsfall cod
+FROM PortfolioProject.dbo.Covid_DÃ¸dsfall cod
 JOIN PortfolioProject.dbo.Covid_Vaksinasjon vak
 	ON cod.location = vak.location
 	AND cod.date = vak.date
