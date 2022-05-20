@@ -1,5 +1,4 @@
 /*
-
 Covid 19 Data Utforskning
 
 Metoder brukt: Joins, CTE, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
