@@ -20,8 +20,6 @@ UPDATE PortfolioProject.dbo.NashvilleHousing
 SET SaleDateConverted = CONVERT(Date, SaleDate)
 
 
-
-
  --------------------------------------------------------------------------------------------------------------------------
 
 -- 2. Populere tomme (Property Address) data
@@ -49,8 +47,6 @@ JOIN PortfolioProject.dbo.NashvilleHousing b
 WHERE a.PropertyAddress is null
 
 
-
-
 --------------------------------------------------------------------------------------------------------------------------
 
 -- 3. Dele opp [PropertyAddress] i individuelle kolonner (Address, City)
@@ -75,8 +71,6 @@ SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', Property
 
 UPDATE PortfolioProject.dbo.NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress))
-
-
 
 
 --------------------------------------------------------------------------------------------------------------------------
@@ -112,8 +106,6 @@ UPDATE PortfolioProject.dbo.NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
 
 
-
-
 --------------------------------------------------------------------------------------------------------------------------
 
 -- 5. Endre Y og N til Yes og No i [SoldAsVacant] kolonnet
@@ -141,8 +133,6 @@ SET SoldAsVacant = CASE When SoldAsVacant = 'Y' Then 'Yes'
 				   END
 
 
-
-
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- 6. Fjerne Duplikat Rad
@@ -163,8 +153,6 @@ FROM PortfolioProject.dbo.NashvilleHousing
 DELETE
 FROM RowNumCTE
 WHERE row_num > 1
-
-
 
 
 ---------------------------------------------------------------------------------------------------------
